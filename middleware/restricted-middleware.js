@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
             } else {
                 req.user = {
                     username: decodedToken.username,
-                    accountType: decodedToken.accountType,
+                    
                 }
                 next()
             }

@@ -11,7 +11,7 @@ const restricted = require('../middleware/restricted-middleware')
 
 
 router.get("/", (req, res) => {
-    res.send({ message: "working !!!" });
+    res.send({ message: "working !!!!!" });
   });
 
 
