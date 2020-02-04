@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   res.send({ message: "working !!!!!!!!!" });
 });
 
-router.get("/getDogs",  (req, res) => {
+router.get("/getDogs", restricted, (req, res) => {
   Dogs.find()
   .then(dogs => {
     res.json(dogs)
@@ -19,14 +19,14 @@ router.get("/getDogs",  (req, res) => {
   .catch(err => res.send({message: "get request for dogs failed"}))
 });
 
-router.post("/postDog", (req, res) => {
+router.post("/postDog", restricted, (req, res) => {
   let dog = req.body;
 
   Dogs.add(dog)
     .then(saved => {
       res
         .status(201)
-        .json({ message: `Thanks for creating ${dog.username}.`, saved });
+        .json({ message: `Thanks for creating ${dog.name}.`, saved });
     })
     .catch(error => {
       res.status(500).json({ message: "cannot add this dog", error });
