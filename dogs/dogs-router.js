@@ -11,13 +11,31 @@ router.get("/", (req, res) => {
   res.send({ message: "working !!!!!!!!!" });
 });
 
-router.get("/getDogs",  (req, res) => {
+router.get("/getDogs", (req, res) => {
   Dogs.find()
-  .then(dogs => {
-    res.json(dogs)
-  })
-  .catch(err => res.send({message: "get request for dogs failed"}))
+    .then(dogs => {
+      res.json(dogs);
+    })
+    .catch(err => res.send({ message: "get request for dogs failed" }));
 });
+
+// get request certain id /////////////////////////////////////
+
+router.get("/getDogs/:id", (req, res) => {
+  const id = req.params.id;
+
+  Dogs.findById(id)
+    .then(dogs => {
+      res.send(dogs);
+    })
+    .catch(error => {
+      res
+        .status(500)
+        .json({ message: "The user information could not be retrieved." });
+    });
+});
+
+////////////////////////////////////////////////
 
 router.post("/postDog", restricted, (req, res) => {
   let dog = req.body;
@@ -43,7 +61,7 @@ router.put("/updateDog/:id", restricted, (req, res) => {
   } else {
     Dogs.update(id, changes)
       .then(hub => {
-        res.status(200).json({message: 'success :)'});
+        res.status(200).json({ message: "success :)" });
       })
       .catch(error => {
         console.log(postData);
@@ -52,16 +70,16 @@ router.put("/updateDog/:id", restricted, (req, res) => {
   }
 });
 
-router.delete('/deleteDog/:id', restricted, (req, res) => {
-  const id = req.params.id
+router.delete("/deleteDog/:id", restricted, (req, res) => {
+  const id = req.params.id;
 
   Dogs.remove(id)
-  .then(dog => {
-    res.json({message: 'dog post deleted succesfully', dog})
-  })
-  .catch(error => {
-    res.status(200).json({message: 'the dog post could not be removed'})
-  })
-})
+    .then(dog => {
+      res.json({ message: "dog post deleted succesfully", dog });
+    })
+    .catch(error => {
+      res.status(200).json({ message: "the dog post could not be removed" });
+    });
+});
 
 module.exports = router;
