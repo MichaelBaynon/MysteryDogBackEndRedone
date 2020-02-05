@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   res.send({ message: "working !!!!!!!!!" });
 });
 
-router.get("/getDogs", restricted, (req, res) => {
+router.get("/getDogs",  (req, res) => {
   Dogs.find()
   .then(dogs => {
     res.json(dogs)
